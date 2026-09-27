@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WarriorNodes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <div class="logo">⚔️ WarriorNodes</div>
+    <button onclick="showCreate()">+ Create Server</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="badge">MINECRAFT HOSTING</p>
+      <h1>Your Minecraft.<br><span>Your Power.</span></h1>
+      <p class="subtitle">
+        Manage your Minecraft servers from one powerful dashboard.
+      </p>
+      <button onclick="showCreate()">Create Server</button>
+    </section>
+
+    <section class="stats">
+      <div class="card">
+        <b id="serverCount">0</b>
+        <small>Servers</small>
+      </div>
+
+      <div class="card">
+        <b>24/7</b>
+        <small>Dashboard</small>
+      </div>
+
+      <div class="card">
+        <b>⚡</b>
+        <small>Fast Control</small>
+      </div>
+    </section>
+
+    <section>
+      <h2>My Servers</h2>
+      <div id="servers"></div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal">
+    <div class="modal-box">
+      <button class="close" onclick="hideCreate()">×</button>
+
+      <h2>Create Server</h2>
+
+      <input id="name" placeholder="Server name">
+
+      <select id="ram">
+        <option>4 GB</option>
+        <option>8 GB</option>
+      </select>
+
+      <select id="software">
+        <option>Paper</option>
+        <option>Purpur</option>
+        <option>Spigot</option>
+      </select>
+
+      <input id="version" value="26.2" placeholder="Minecraft version">
+
+      <button onclick="createServer()">Create Server</button>
+    </div>
+  </div>
+
+  <script>
+    async function loadServers() {
+      const response = await fetch("/api/servers");
+      const servers = await response.json();
+
+      document.getElementById("serverCount").textContent = servers.length;
+
+      document.getElementById("servers").innerHTML = servers.map(server => `
+        <div class="server">
+          <div>
+            <h3>⚔️ ${escapeHtml(server.name)}</h3>
+            <p>${server.software} • Minecraft ${server.version}</p>
+            <span>${server.ram}</span>
+          </div>
+
+          <div class="controls">
+            <strong>${server.status}</strong>
+            <button onclick="control('${server.id}','start')">Start</button>
+            <button onclick="control('${server.id}','stop')">Stop</button>
+            <button onclick="control('${server.id}','restart')">Restart</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function control(id, action) {
+      await fetch(`/api/servers/${id}/${action}`, {
+        method: "POST"
+      });
+
+      loadServers();
+    }
+
+    async function createServer() {
+      const name = document.getElementById("name").value.trim();
+
+      if (!name) {
+        alert("Server name enter karo");
+        return;
+      }
+
+      await fetch("/api/servers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          ram: document.getElementById("ram").value,
+          software: document.getElementById("software").value,
+          version: document.getElementById("version").value
+        })
+      });
+
+      hideCreate();
+      loadServers();
+    }
+
+    function showCreate() {
+      document.getElementById("modal").classList.add("show");
+    }
+
+    function hideCreate() {
+      document.getElementById("modal").classList.remove("show");
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[character]));
+    }
+
+    loadServers();
+  </script>
+</body>
+                        </html>
