@@ -1,0 +1,239 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: white;
+  background:
+    linear-gradient(rgba(3, 10, 8, 0.78), rgba(3, 10, 8, 0.95)),
+    url("https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=2000&q=80")
+    center / cover fixed;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 6%;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #4ade80;
+  color: #06130b;
+}
+
+main {
+  width: min(1100px, 92%);
+  margin: auto;
+  padding: 55px 0;
+}
+
+.hero {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: rgba(74,222,128,.12);
+  color: #86efac;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+h1 {
+  font-size: clamp(42px, 8vw, 78px);
+  margin: 18px 0;
+  line-height: .95;
+}
+
+h1 span {
+  color: #4ade80;
+}
+
+.subtitle {
+  color: #b7c5bd;
+  max-width: 600px;
+  margin: 20px auto 30px;
+  line-height: 1.6;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 25px 0 45px;
+}
+
+.card,
+.server,
+.modal-box {
+  background: rgba(10, 20, 16, .82);
+  border: 1px solid rgba(255,255,255,.09);
+  box-shadow: 0 15px 40px rgba(0,0,0,.25);
+}
+
+.card {
+  padding: 22px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.card b {
+  display: block;
+  font-size: 28px;
+  color: #86efac;
+}
+
+.card small {
+  color: #9caea3;
+}
+
+h2 {
+  margin-bottom: 15px;
+}
+
+.server {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  margin: 12px 0;
+  border-radius: 16px;
+}
+
+.server h3 {
+  margin: 0 0 8px;
+}
+
+.server p {
+  margin: 0 0 10px;
+  color: #9caea3;
+}
+
+.server span {
+  color: #86efac;
+  font-size: 13px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.controls strong {
+  text-transform: capitalize;
+  margin-right: 5px;
+  color: #86efac;
+}
+
+.controls button {
+  padding: 8px 11px;
+  font-size: 12px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  width: min(450px, 100%);
+  padding: 25px;
+  border-radius: 18px;
+  position: relative;
+}
+
+.modal-box h2 {
+  margin-top: 0;
+}
+
+.modal-box input,
+.modal-box select {
+  width: 100%;
+  margin: 7px 0;
+  padding: 13px;
+  border-radius: 9px;
+  border: 1px solid #26372e;
+  background: #0b1510;
+  color: white;
+}
+
+.modal-box > button:last-child {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background: transparent;
+  color: white;
+  font-size: 22px;
+  padding: 3px 8px;
+}
+
+@media (max-width: 700px) {
+  header {
+    padding: 15px;
+  }
+
+  header button {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  main {
+    width: 94%;
+    padding-top: 30px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .server {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controls {
+    justify-content: flex-start;
+  }
+
+  h1 {
+    font-size: 48px;
+  }
+}
